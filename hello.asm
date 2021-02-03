@@ -5,8 +5,7 @@ section .data
 section .bss
 section .text
         global  main
-main:
-        mov     rax,    1       ; 1 = write
+main:   mov     rax,    1       ; 1 = write
         mov     rdi,    1       ; 1 = to stdout
         mov     rsi,    msg     ; message to print
         mov     rdx,    len     ; length of message w/o trailing NUL
