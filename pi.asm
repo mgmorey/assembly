@@ -1,4 +1,4 @@
-; hello.asm
+; pi.asm
 
 section .data
         NUL     equ     0x00
