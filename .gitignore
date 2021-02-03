@@ -1,0 +1,9 @@
+*.log
+*.lst
+*.o
+*.stackdump
+*~
+TAGS
+core
+hello
+logs/
