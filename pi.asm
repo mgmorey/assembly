@@ -4,7 +4,7 @@ section .data
         NUL     equ     0x00
         LF      equ     0x0a
         fmt     db      "%lf", LF, NUL
-        pi      dq      3.1415926
+        pi      dq      3.14159265358979323846
 section .bss
 section .text
         extern  printf
