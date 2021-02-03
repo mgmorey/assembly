@@ -17,6 +17,4 @@ main:   push    rbp             ; prologue
         syscall                 ; print the message
         mov     rsp,    rbp     ; epilogue
         pop     rbp             ; epilogue
-        mov     rax,    60      ; 60 = exit
-        mov     rdi,    0       ; 0 = success
-        syscall                 ; quit program
+        ret
