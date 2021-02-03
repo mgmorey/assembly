@@ -1,6 +1,9 @@
 ; hello.asm
+
 section .data
-        msg     db      "Hello, World!", 10, 0
+        LF      equ     10
+        NUL     equ     0
+        msg     db      "Hello, World!", LF, NUL
         len     equ     $-msg-1
 section .bss
 section .text
