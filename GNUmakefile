@@ -1,5 +1,3 @@
-# GNUmakefile for hello.asm
-
 all:		hello pi
 
 clean:
