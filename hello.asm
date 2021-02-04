@@ -15,6 +15,7 @@ main:   push    rbp             ; prologue
         mov     rsi,    msg     ; message to print
         mov     rdx,    len     ; length of message w/o trailing NUL
         syscall                 ; print the message
+        mov     rax,    0       ; set return code
         mov     rsp,    rbp     ; epilogue
         pop     rbp             ; epilogue
-        ret
+        ret                     ; return

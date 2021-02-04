@@ -15,6 +15,7 @@ main:   push    rbp             ; prologue
         movq    xmm0,   [pi]    ; load value of pi
         mov     rdi,    fmt     ; format specifier
         call    printf          ; call printf()
+        mov     rax,    0       ; set return code
         mov     rsp,    rbp     ; epilogue
         pop     rbp             ; epilogue
-        ret
+        ret                     ; return
