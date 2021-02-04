@@ -14,7 +14,7 @@ endif
 
 ASFLAGS += -f elf64 -g
 
-.PHONY:	clean
+.PHONY:	all
 all: hello pi
 
 .PHONY:	clean
