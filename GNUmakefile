@@ -12,7 +12,10 @@ CC = gcc
 COMPILE.asm = nasm $(ASFLAGS)
 .SUFFIXES = .asm
 
-BINARIES = hello pi
+sources = hello.asm pi.asm
+listings = $(subst .asm,.lst,$(sources))
+objects = $(subst .asm,.o,$(sources))
+binaries = $(subst .asm,,$(sources))
 
 %.o: %.asm
 	$(COMPILE.asm) -l $*.lst -o $@ $<
@@ -21,11 +24,11 @@ BINARIES = hello pi
 	$(LINK.o) $(LDLIBS) -o $@ $^
 
 .PHONY:	all
-all: $(BINARIES)
+all: $(binaries)
 
 .PHONY:	clean
 clean:
-	@/bin/rm -f $(BINARIES) *.lst *.o
+	/bin/rm -f $(binaries) $(objects) $(listings)
 
 hello.o: hello.asm
 
