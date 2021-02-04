@@ -1,15 +1,14 @@
 AS = nasm
 CC = gcc
+ASFLAGS = -f elf64 -g
+LDFLAGS =
 
 GCC_MAJOR = $(shell gcc -dumpversion | cut -d. -f1)
 GCC_5_OR_NEWER = $(shell test $(GCC_MAJOR) -ge 5 && echo true || echo false)
 
 ifeq "$(GCC_5_OR_NEWER)" "true"
-	ASFLAGS = -F dwarf -f elf64 -g
-	LDFLAGS = -no-pie
-else
-	ASFLAGS = -f elf64 -g
-	LDFLAGS =
+	ASFLAGS += -F dwarf
+	LDFLAGS += -no-pie
 endif
 
 COMPILE.s = $(AS) $(ASFLAGS) $(TARGET_MACH)
