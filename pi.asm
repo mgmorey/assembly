@@ -12,8 +12,8 @@ section .text
 main:   push    rbp             ; prologue
         mov     rbp,    rsp     ; prologue
         mov     rax,    1       ; 1 xmm register used
-        movq    xmm0,   [pi]    ; load value of pi
         mov     rdi,    fmt     ; format specifier
+        movq    xmm0,   [pi]    ; load value of pi
         call    printf          ; call printf()
         mov     rax,    0       ; set return code
         mov     rsp,    rbp     ; epilogue
