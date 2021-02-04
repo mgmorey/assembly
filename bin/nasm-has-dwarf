@@ -6,6 +6,8 @@ nasm_minor=$(echo $nasm_version | cut -d. -f2)
 
 if [ "$nasm_major" -ge 2 -a "$nasm_minor" -ge 14 ]; then
     echo true
+elif [ "$nasm_major" -gt 2 ]; then
+    echo true
 else
     echo false
 fi
