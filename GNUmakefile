@@ -1,7 +1,8 @@
-AS := nasm
-CC := gcc
-ASFLAGS := -f elf64 -g
-LDFLAGS :=
+AS = nasm
+CC = gcc
+
+COMPILE.s = $(AS) $(ASFLAGS) $(TARGET_MACH)
+LINK.o = $(CC) $(LDFLAGS) $(TARGET_ARCH)
 
 GCC_MAJOR := $(shell gcc -dumpversion | cut -d. -f1)
 GCC_5_OR_NEWER := $(shell test $(GCC_MAJOR) -ge 5 && echo true || echo false)
@@ -11,8 +12,7 @@ ifeq "$(GCC_5_OR_NEWER)" "true"
 	LDFLAGS += -no-pie
 endif
 
-COMPILE.s = $(AS) $(ASFLAGS) $(TARGET_MACH)
-LINK.o = $(CC) $(LDFLAGS) $(TARGET_ARCH)
+ASFLAGS += -f elf64 -g
 
 .PHONY:	clean
 all: hello pi
