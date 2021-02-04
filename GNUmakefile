@@ -1,6 +1,3 @@
-AS = nasm
-CC = gcc
-
 GCC_MAJOR := $(shell gcc -dumpversion | cut -d. -f1)
 GCC_5_OR_NEWER := $(shell test $(GCC_MAJOR) -ge 5 && echo true || echo false)
 
@@ -10,6 +7,16 @@ ifeq "$(GCC_5_OR_NEWER)" "true"
 endif
 
 ASFLAGS += -f elf64 -g
+CC = gcc
+
+COMPILE.asm = nasm $(ASFLAGS)
+.SUFFIXES = .asm
+
+%.o: %.asm
+	$(COMPILE.asm) -l $*.lst -o $@ $<
+
+%: %.o
+	$(LINK.o) $(LDLIBS) -o $@ $^
 
 .PHONY:	all
 all: hello pi
@@ -18,13 +25,10 @@ all: hello pi
 clean:
 	@/bin/rm -f hello pi *.lst *.o
 
-hello: hello.o
-
 hello.o: hello.asm
 
-pi: pi.o
+hello: hello.o
 
 pi.o: pi.asm
 
-%.o: %.asm
-	$(COMPILE.s) -l $*.lst -o $@ $<
+pi: pi.o
