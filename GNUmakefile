@@ -1,8 +1,7 @@
-GCC_MAJOR := $(shell gcc -dumpversion | cut -d. -f1)
-GCC_5_OR_NEWER := $(shell test $(GCC_MAJOR) -ge 5 && echo true || echo false)
-
-ifeq "$(GCC_5_OR_NEWER)" "true"
+ifeq "$(shell bin/nasm-has-dwarf)" "true"
 	ASFLAGS += -F dwarf
+endif
+ifeq "$(shell bin/gcc-has-no-pie)" "true"
 	LDFLAGS += -no-pie
 endif
 
