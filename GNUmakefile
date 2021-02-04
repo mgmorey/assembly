@@ -1,10 +1,10 @@
 AS = nasm
 CC = gcc
 
-GCC_MAJOR = $(shell gcc --version | awk 'NR == 1 {print $$3}' | cut -d. -f1)
-GCC_MAJOR_GT_4 = $(shell test $(GCC_MAJOR) -gt 4 && echo true || echo false)
+GCC_MAJOR = $(shell gcc -dumpversion | cut -d. -f1)
+GCC_5_OR_NEWER = $(shell test $(GCC_MAJOR) -ge 5 && echo true || echo false)
 
-ifeq "$(GCC_MAJOR_GT_4)" "true"
+ifeq "$(GCC_5_OR_NEWER)" "true"
 	ASFLAGS = -F dwarf -f elf64 -g
 	LDFLAGS = -no-pie
 else
