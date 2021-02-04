@@ -1,18 +1,37 @@
-all:		hello pi
+AS = nasm
+CC = gcc
 
+GCC_MAJOR = $(shell gcc --version | awk 'NR == 1 {print $$3}' | cut -d. -f1)
+GCC_MAJOR_GT_4 = $(shell test $(GCC_MAJOR) -gt 4 && echo true || echo false)
+
+ifeq "$(GCC_MAJOR_GT_4)" "true"
+	ASFLAGS = -F dwarf -f elf64 -g
+	LDFLAGS = -no-pie
+else
+	ASFLAGS = -f elf64 -g
+	LDFLAGS =
+endif
+
+COMPILE.s = $(AS) $(ASFLAGS) $(TARGET_MACH)
+LINK.o = $(CC) $(LDFLAGS) $(TARGET_ARCH)
+
+.PHONY:	clean
+all: hello pi
+
+.PHONY:	clean
 clean:
-	rm -f hello hello.o hello.lst
+	@/bin/rm -f hello pi *.lst *.o
 
-hello:		hello.o
-	gcc -no-pie -o hello hello.o
+hello: hello.o
 
-hello.o:	hello.asm
-	nasm -F dwarf -f elf64 -g -l hello.lst hello.asm
+hello.o: hello.asm
 
-pi:		pi.o
-	gcc -no-pie -o pi pi.o
+pi: pi.o
 
-pi.o:	pi.asm
-	nasm -F dwarf -f elf64 -g -l pi.lst pi.asm
+pi.o: pi.asm
 
-.pseudo:	all clean
+%: %.o
+	$(LINK.o) $(LOADLIBES) $(LDLIBS) -o $@ $^
+
+%.o: %.asm
+	$(COMPILE.s) -l $*.lst -o $@ $<
