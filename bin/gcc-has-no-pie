@@ -1,0 +1,11 @@
+#!/bin/sh -eu
+
+gcc_version=$(gcc -dumpfullversion 2>/dev/null || gcc -dumpversion)
+gcc_major=$(echo $gcc_version | cut -d. -f1)
+gcc_minor=$(echo $gcc_version | cut -d. -f2)
+
+if [ "$gcc_major" -ge 9 -a "$gcc_minor" -ge 3 ]; then
+    echo true
+else
+    echo false
+fi

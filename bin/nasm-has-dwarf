@@ -1,0 +1,11 @@
+#!/bin/sh -eu
+
+nasm_version=$(nasm -v | awk '{print $NF}')
+nasm_major=$(echo $nasm_version | cut -d. -f1)
+nasm_minor=$(echo $nasm_version | cut -d. -f2)
+
+if [ "$nasm_major" -ge 2 -a "$nasm_minor" -ge 14 ]; then
+    echo true
+else
+    echo false
+fi
