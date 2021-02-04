@@ -1,9 +1,6 @@
 AS = nasm
 CC = gcc
 
-COMPILE.s = $(AS) $(ASFLAGS) $(TARGET_MACH)
-LINK.o = $(CC) $(LDFLAGS) $(TARGET_ARCH)
-
 GCC_MAJOR := $(shell gcc -dumpversion | cut -d. -f1)
 GCC_5_OR_NEWER := $(shell test $(GCC_MAJOR) -ge 5 && echo true || echo false)
 
@@ -28,9 +25,6 @@ hello.o: hello.asm
 pi: pi.o
 
 pi.o: pi.asm
-
-%: %.o
-	$(LINK.o) $(LOADLIBES) $(LDLIBS) -o $@ $^
 
 %.o: %.asm
 	$(COMPILE.s) -l $*.lst -o $@ $<
