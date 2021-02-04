@@ -1,6 +1,6 @@
 #!/bin/sh -eu
 
-nasm_version=$(nasm -v | awk '{print $NF}')
+nasm_version=$(nasm -v | awk '{print $3}')
 nasm_major=$(echo $nasm_version | cut -d. -f1)
 nasm_minor=$(echo $nasm_version | cut -d. -f2)
 
