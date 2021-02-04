@@ -1,10 +1,10 @@
-AS = nasm
-CC = gcc
-ASFLAGS = -f elf64 -g
-LDFLAGS =
+AS := nasm
+CC := gcc
+ASFLAGS := -f elf64 -g
+LDFLAGS :=
 
-GCC_MAJOR = $(shell gcc -dumpversion | cut -d. -f1)
-GCC_5_OR_NEWER = $(shell test $(GCC_MAJOR) -ge 5 && echo true || echo false)
+GCC_MAJOR := $(shell gcc -dumpversion | cut -d. -f1)
+GCC_5_OR_NEWER := $(shell test $(GCC_MAJOR) -ge 5 && echo true || echo false)
 
 ifeq "$(GCC_5_OR_NEWER)" "true"
 	ASFLAGS += -F dwarf
