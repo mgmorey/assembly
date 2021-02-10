@@ -1,11 +1,13 @@
+ifeq "$(shell uname -s)" "Linux"
 ifeq "$(shell bin/nasm-has-dwarf)" "true"
 	ASFLAGS += -F dwarf
 endif
 ifeq "$(shell bin/gcc-has-no-pie)" "true"
 	LDFLAGS += -no-pie
 endif
+	ASFLAGS += -f elf64 -g
+endif
 
-ASFLAGS += -f elf64 -g
 CC = gcc
 
 COMPILE.asm = nasm $(ASFLAGS)
