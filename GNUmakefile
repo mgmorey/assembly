@@ -22,6 +22,14 @@ endif
 	CC = gcc
 endif
 
+ifeq "$(shell uname -s | cut -d- -f 1)" "MINGW64_NT"
+ifeq "$(shell bin/gcc-has-no-pie)" "true"
+	LDFLAGS += -no-pie
+endif
+	ASFLAGS += -f win64 -g
+	CC = gcc
+endif
+
 TARGET_ARCH = -march=x86_64
 
 COMPILE.asm = nasm $(ASFLAGS)
