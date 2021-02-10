@@ -11,7 +11,7 @@ section .text
         global  main
 main:   push    rbp             ; prologue
         mov     rbp,    rsp     ; prologue
-        mov     rax,    1       ; 1 xmm register used
+        mov     rax,    1       ; 1 argument
         mov     rdi,    fmt     ; format specifier
         movq    xmm0,   [pi]    ; load value of pi
         call    printf          ; call printf()
