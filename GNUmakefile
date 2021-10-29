@@ -1,36 +1,24 @@
-ifeq "$(shell uname -s)" "Darwin"
-ifeq "$(shell bin/nasm-has-dwarf)" "true"
-	ASFLAGS += -F dwarf
-endif
-ifeq "$(shell bin/gcc-has-no-pie)" "true"
-	LDFLAGS += -no-pie
-endif
-	ASFLAGS += -f macho64 -g
-	CC = gcc-10
-	LDFLAGS =
-	LDLIBS =
-endif
+SYSTEM := $(shell uname -s | cut -d- -f 1)
 
-ifeq "$(shell uname -s)" "Linux"
-ifeq "$(shell bin/nasm-has-dwarf)" "true"
-	ASFLAGS += -F dwarf
-endif
-ifeq "$(shell bin/gcc-has-no-pie)" "true"
-	LDFLAGS += -no-pie
-endif
-	ASFLAGS += -f elf64 -g
-	CC = gcc
-endif
+CC = gcc
 
-ifeq "$(shell uname -s | cut -d- -f 1)" "MINGW64_NT"
-ifeq "$(shell bin/gcc-has-no-pie)" "true"
-	LDFLAGS += -no-pie
-endif
+ifeq "$(SYSTEM)" "CYGWIN_NT"
 	ASFLAGS += -f win64 -g
-	CC = gcc
+else ifeq "$(SYSTEM)" "Darwin"
+	ASFLAGS += -f macho64 -g
+else ifeq "$(SYSTEM)" "Linux"
+	ASFLAGS += -f elf64 -g
+else ifeq "$(SYSTEM)" "MINGW64_NT"
+	ASFLAGS += -f win64 -g
 endif
 
-TARGET_ARCH = -march=x86_64
+ifeq "$(shell bin/nasm-has-dwarf)" "true"
+	ASFLAGS += -F dwarf
+endif
+
+ifeq "$(shell bin/gcc-has-no-pie)" "true"
+	LDFLAGS += -no-pie
+endif
 
 COMPILE.asm = nasm $(ASFLAGS)
 .SUFFIXES = .asm
