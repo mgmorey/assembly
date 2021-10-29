@@ -6,6 +6,8 @@ ifeq "$(SYSTEM)" "CYGWIN_NT"
 	ASFLAGS += -f win64 -g
 else ifeq "$(SYSTEM)" "Darwin"
 	ASFLAGS += -f macho64 -g
+else ifeq "$(SYSTEM)" "FreeBSD"
+	ASFLAGS += -f elf64 -g
 else ifeq "$(SYSTEM)" "Linux"
 	ASFLAGS += -f elf64 -g
 else ifeq "$(SYSTEM)" "MINGW64_NT"
