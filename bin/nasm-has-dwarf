@@ -1,13 +1,26 @@
 #!/bin/sh -eu
 
 nasm_version=$(nasm -v | awk '{print $3}')
-nasm_major=$(echo $nasm_version | cut -d. -f1)
-nasm_minor=$(echo $nasm_version | cut -d. -f2)
+nasm_version_major=$(echo $nasm_version | cut -d. -f1)
+nasm_version_minor=$(echo $nasm_version | cut -d. -f2)
+system="$(uname -s | cut -d- -f 1)"
 
-if [ "$nasm_major" -ge 2 -a "$nasm_minor" -ge 14 ]; then
-    echo true
-elif [ "$nasm_major" -gt 2 ]; then
-    echo true
+is_nasm_2_14_or_greater() {
+    if [ "$nasm_version_major" -gt 2 ]; then
+        return 0
+    elif [ "$nasm_version_major" -eq 2 -a "$nasm_version_minor" -ge 14 ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+if [ "$system" = Linux ]; then
+    if is_nasm_2_14_or_greater; then
+        echo true
+    else
+        echo false
+    fi
 else
     echo false
 fi
